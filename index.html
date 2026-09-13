@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EducAcción Corp. · Transformando comunidades a través de la educación y la acción</title>
+<meta name="description" content="EducAcción Corp. es una organización sin fines de lucro comprometida con transformar las comunidades de Puerto Rico a través de la educación, la alfabetización y la acción ciudadana." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const LOGO_B64 = "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";
+
+const SOCIAL_HANDLE = "educaccionpr";
+const CONTACT_EMAIL = "educaccionprcorp@gmail.com";
+const INSTAGRAM_URL = `https://instagram.com/${SOCIAL_HANDLE}`;
+
+function IconInstagram(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <rect x="3" y="3" width="18" height="18" rx="5.5" />
+      <circle cx="12" cy="12" r="4.1" />
+      <circle cx="17.15" cy="6.85" r="1.05" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function EducAccionCorp() {
+  const [form, setForm] = useState({
+    nombre: "",
+    correo: "",
+    organizacion: "",
+    motivo: "Solicitar un taller",
+    mensaje: "",
+  });
+  const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState(false);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setEnviando(true);
+    setError(false);
+    try {
+      const res = await fetch("https://formspree.io/f/mzeblakz", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(e.target),
+      });
+      if (res.ok) {
+        setEnviado(true);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      setError(true);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  const talleres = [
+    {
+      titulo: "Trastorno por Déficit de Atención e Hiperactividad (TDAH)",
+      texto:
+        "El TDAH explicado desde la salud pública: su relación con la educación, la familia, el entorno y el acceso a servicios a lo largo de la vida.",
+      colaborador: "Colaborador oficial: Dr. Jonathan Caraballo, MD, DABPN",
+    },
+    {
+      titulo: "Salud Pública y Determinantes Sociales de la Salud",
+      texto:
+        "Marco conceptual de los determinantes sociales y su aplicación práctica en el diseño de programas y servicios comunitarios.",
+    },
+    {
+      titulo: "Vivienda Segura",
+      texto:
+        "Orientación sobre condiciones de vivienda digna, asistencias disponibles y los riesgos de habitar espacios inseguros.",
+    },
+    {
+      titulo: "Participación Ciudadana, Procesos Legislativos y Política Pública (PPP)",
+      texto:
+        "Cómo incidir en la política pública desde la ciudadanía: cómo leer un proyecto de política pública, comprenderlo y analizarlo, además del seguimiento de medidas, vistas públicas y estrategias de cabildeo comunitario.",
+    },
+  ];
+
+  const valores = [
+    { nombre: "Empatía", texto: "Nos acercamos a cada comunidad desde la escucha y el respeto por su realidad." },
+    { nombre: "Transparencia", texto: "Comunicamos con claridad qué hacemos, cómo lo hacemos y con qué propósito." },
+    { nombre: "Honestidad", texto: "Actuamos con integridad en cada alianza y compromiso comunitario." },
+    { nombre: "Ética", texto: "Guiamos nuestras decisiones por el bienestar colectivo, no por intereses particulares." },
+  ];
+
+  return (
+    <div className="page">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Jost:wght@300;400;500;600;700&display=swap');
+
+        * { box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+
+        .page {
+          --cream: #F4EFE6;
+          --cream-2: #ECE4D6;
+          --white: #FBF8F2;
+          --ink: #2A211B;
+          --ink-soft: #5C4F44;
+          --gold: #B08D4F;
+          --gold-soft: #D9C49B;
+          --line: #C9B98D;
+
+          background: var(--cream);
+          color: var(--ink);
+          font-family: 'Jost', sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .page h1, .page h2, .page h3 {
+          font-family: 'Fraunces', serif;
+          margin: 0;
+          font-weight: 500;
+          letter-spacing: -0.01em;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+        a { color: inherit; }
+
+        /* ---------- DECORATIVE ROOT MOTIF ---------- */
+        .roots { position: absolute; pointer-events: none; opacity: 0.5; }
+        .leaf {
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          background: var(--gold);
+          border-radius: 0 100% 0 100%;
+          opacity: 0.55;
+          pointer-events: none;
+        }
+        .leaf-outline {
+          background: transparent;
+          border: 1.5px solid var(--gold);
+        }
+
+        /* ---------- NAV ---------- */
+        .nav {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 24px 32px;
+          max-width: 1024px;
+          margin: 0 auto;
+        }
+        .nav-mark { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; }
+        .nav-mark img { width: 22px; height: auto; }
+        .nav-links { display: flex; gap: 26px; font-size: 14px; }
+        .nav-links a { text-decoration: none; color: var(--ink-soft); transition: color 0.2s ease; }
+        .nav-links a:hover { color: var(--gold); }
+        @media (max-width: 640px) { .nav-links { gap: 14px; font-size: 12.5px; } }
+
+        /* ---------- HERO ---------- */
+        .hero {
+          background: var(--ink);
+          color: var(--cream);
+          padding: 64px 0 76px;
+          position: relative;
+          overflow: hidden;
+        }
+        .hero-logo-wrap {
+          width: 132px;
+          height: 132px;
+          border-radius: 50%;
+          background: var(--cream);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 22px;
+          box-shadow: 0 0 0 1px var(--gold-soft);
+        }
+        .hero-logo { width: 78px; height: auto; display: block; margin: 0; }
+        .hero-wordmark {
+          text-align: center;
+          font-family: 'Fraunces', serif;
+          font-weight: 700;
+          font-size: 26px;
+          color: var(--cream);
+        }
+        .hero-eyebrow {
+          text-align: center;
+          font-size: 12.5px;
+          letter-spacing: 0.32em;
+          color: var(--gold-soft);
+          font-weight: 600;
+          margin-top: 4px;
+          margin-bottom: 6px;
+        }
+        .hero h1 {
+          text-align: center;
+          font-size: clamp(38px, 6vw, 56px);
+          line-height: 1.08;
+        }
+        .hero h1 em { font-style: italic; color: var(--gold-soft); font-weight: 400; }
+        .hero-tagline {
+          text-align: center;
+          max-width: 46ch;
+          margin: 20px auto 0;
+          font-size: 17px;
+          color: #E4D9C4;
+        }
+        .hero-rule { width: 56px; height: 2px; background: var(--gold); margin: 30px auto; }
+        .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+        .btn {
+          display: inline-block;
+          padding: 13px 26px;
+          border-radius: 999px;
+          font-size: 14.5px;
+          font-weight: 500;
+          text-decoration: none;
+          cursor: pointer;
+          border: 1px solid transparent;
+          font-family: 'Jost', sans-serif;
+        }
+        .btn-solid { background: var(--gold); color: var(--ink); }
+        .btn-solid:hover { background: var(--gold-soft); }
+        .btn-outline { border-color: var(--gold-soft); color: var(--cream); background: transparent; }
+        .btn-outline:hover { border-color: var(--cream); }
+
+        /* ---------- NOSOTROS ---------- */
+        .section { padding: 76px 0; position: relative; overflow: hidden; }
+        .section-head { margin-bottom: 40px; max-width: 62ch; }
+        .section-eyebrow { font-size: 13px; letter-spacing: 0.06em; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+        .section-head h2 { font-size: 30px; }
+        .section-head p { margin-top: 14px; color: var(--ink-soft); font-size: 16px; }
+
+        .pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+        .pilar { padding: 30px 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .pilar h3 { font-size: 18px; margin-bottom: 10px; }
+        .pilar p { color: var(--ink-soft); font-size: 14.5px; margin: 0; }
+        @media (max-width: 720px) {
+          .pilares { grid-template-columns: 1fr; }
+        }
+
+        .valores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 8px; }
+        .valor { text-align: left; }
+        .valor-mark { width: 14px; height: 14px; background: var(--gold); border-radius: 0 100% 0 100%; margin-bottom: 12px; }
+        .valor h4 { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+        .valor p { font-size: 13.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+        @media (max-width: 720px) { .valores-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 460px) { .valores-grid { grid-template-columns: 1fr; } }
+
+        /* ---------- TALLERES ---------- */
+        .taller { padding: 28px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1.6fr; gap: 28px; }
+        .taller:last-child { border-bottom: 1px solid var(--line); }
+        .taller h3 { font-size: 20px; line-height: 1.25; }
+        .taller p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+        .taller-colaborador { margin-top: 10px !important; font-size: 13.5px !important; color: var(--gold) !important; font-weight: 600; }
+        @media (max-width: 640px) { .taller { grid-template-columns: 1fr; gap: 10px; } }
+
+        /* ---------- COMUNIDAD ---------- */
+        .comunidad-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+        .caso-card {
+          background: var(--ink);
+          color: var(--cream);
+          border-radius: 4px;
+          padding: 40px 36px;
+          position: relative;
+          overflow: hidden;
+        }
+        .caso-tag { font-size: 12.5px; letter-spacing: 0.1em; color: var(--gold-soft); font-weight: 600; margin-bottom: 14px; }
+        .caso-card h3 { font-size: 24px; margin-bottom: 14px; }
+        .caso-card p { color: #E4D9C4; font-size: 15px; line-height: 1.65; margin: 0; }
+        .impacto-list { display: flex; flex-direction: column; gap: 26px; }
+        .impacto-item h3 { font-size: 18px; margin-bottom: 8px; }
+        .impacto-item p { color: var(--ink-soft); font-size: 14.5px; margin: 0; }
+        @media (max-width: 720px) { .comunidad-wrap { grid-template-columns: 1fr; } }
+
+        /* ---------- INCIDENCIA (timeline) ---------- */
+        .timeline { position: relative; padding-left: 4px; margin-top: 8px; }
+        .timeline::before { content: ""; position: absolute; left: 5px; top: 12px; bottom: 12px; width: 1.5px; background: var(--line); }
+        .tl-row { position: relative; display: flex; align-items: flex-start; gap: 22px; padding: 20px 0; }
+        .tl-dot { position: relative; z-index: 1; width: 11px; height: 11px; border-radius: 50%; background: var(--gold); margin-top: 5px; flex-shrink: 0; box-shadow: 0 0 0 4px var(--cream); }
+        .tl-text strong { display: block; font-size: 18px; font-family: 'Fraunces', serif; font-weight: 600; }
+        .tl-text span { display: block; margin-top: 6px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; max-width: 60ch; }
+
+        /* ---------- CONTACTO ---------- */
+        .contacto { background: var(--ink); color: var(--cream); padding: 76px 0; position: relative; overflow: hidden; }
+        .contacto .section-head p { color: #CBBBA0; }
+        .contacto .section-eyebrow { color: var(--gold-soft); }
+        .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+        @media (max-width: 720px) { .contacto-grid { grid-template-columns: 1fr; } }
+
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 13px; color: var(--gold-soft); margin-bottom: 7px; }
+        .field input, .field select, .field textarea {
+          width: 100%; background: transparent; border: none;
+          border-bottom: 1px solid rgba(244, 239, 230, 0.35);
+          color: var(--cream); font-family: 'Jost', sans-serif; font-size: 15px; padding: 8px 2px; outline: none;
+        }
+        .field input::placeholder, .field textarea::placeholder { color: rgba(244, 239, 230, 0.4); }
+        .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--cream); }
+        .field select option { color: var(--ink); }
+        .field textarea { resize: vertical; min-height: 76px; }
+
+        .submit-btn {
+          background: var(--gold); color: var(--ink); border: none; border-radius: 999px;
+          padding: 13px 28px; font-size: 14.5px; font-weight: 600; cursor: pointer; font-family: 'Jost', sans-serif;
+        }
+        .submit-btn:hover { background: var(--gold-soft); }
+        .submit-btn:disabled { opacity: 0.6; cursor: default; }
+        .form-error { margin-top: 14px; font-size: 13.5px; color: #E8B4A0; }
+
+        .confirm { font-size: 16px; line-height: 1.6; max-width: 42ch; }
+        .confirm strong { display: block; font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 10px; font-weight: 600; }
+
+        .colaborar { border-top: 1px solid rgba(244, 239, 230, 0.2); padding-top: 26px; }
+        .colaborar h3 { font-size: 19px; font-weight: 500; }
+        .colaborar p { color: #CBBBA0; font-size: 14.5px; margin: 12px 0 20px; max-width: 42ch; }
+        .btn-donar { border: 1px solid var(--cream); color: var(--cream); }
+        .btn-donar:hover { background: var(--cream); color: var(--ink); }
+
+        /* ---------- FOOTER ---------- */
+        .footer { padding: 36px 0; background: var(--cream-2); color: var(--ink-soft); }
+        .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; }
+        .footer-note strong { color: var(--ink); }
+        .footer-contact { display: flex; align-items: center; gap: 18px; }
+        .footer-contact a { text-decoration: none; color: var(--ink-soft); transition: color 0.2s ease; }
+        .footer-contact a:hover { color: var(--gold); }
+        .footer-social {
+          display: flex; align-items: center; gap: 10px;
+          text-decoration: none; color: var(--ink-soft); font-size: 13.5px;
+        }
+        .footer-social:hover { color: var(--gold); }
+        .footer-social-icon {
+          display: flex; align-items: center; justify-content: center;
+          width: 34px; height: 34px; border-radius: 50%;
+          border: 1px solid var(--line); flex-shrink: 0;
+          transition: border-color 0.2s ease;
+        }
+        .footer-social:hover .footer-social-icon { border-color: var(--gold); }
+
+        @media (prefers-reduced-motion: no-preference) {
+          .hero-fade { animation: fadeUp 0.7s ease both; }
+          @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        }
+      `}</style>
+
+      {/* NAV */}
+      <nav className="nav">
+        <div className="nav-mark">
+          <img src={`data:image/png;base64,${LOGO_B64}`} alt="" />
+          EducAcción
+        </div>
+        <div className="nav-links">
+          <a href="#nosotros">Nosotros</a>
+          <a href="#talleres">Talleres</a>
+          <a href="#comunidad">Comunidad</a>
+          <a href="#incidencia">Incidencia</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <header className="hero" id="inicio">
+        <div className="leaf" style={{ width: 22, height: 22, top: 40, left: 60 }} />
+        <div className="leaf leaf-outline" style={{ width: 30, height: 30, bottom: 30, right: 90, transform: "rotate(20deg)" }} />
+        <div className="leaf" style={{ width: 12, height: 12, top: 120, right: 140 }} />
+        <div className="container hero-fade">
+          <div className="hero-logo-wrap">
+            <img className="hero-logo" src={`data:image/png;base64,${LOGO_B64}`} alt="EducAcción Consciente" />
+          </div>
+          <div className="hero-wordmark">EducAcción</div>
+          <div className="hero-eyebrow">CONSCIENTE</div>
+          <h1>
+            Transformando comunidades <em>a través de la educación y la acción</em>
+          </h1>
+          <p className="hero-tagline">
+            EducAcción Corp. es una organización sin fines de lucro de base
+            comunitaria comprometida con transformar las comunidades de Puerto
+            Rico a través de la educación, la alfabetización y la acción
+            ciudadana.
+          </p>
+          <div className="hero-rule" />
+          <div className="hero-actions">
+            <a className="btn btn-solid" href="#contacto">Solicitar un taller</a>
+            <a className="btn btn-outline" href="#contacto">Colaborar o donar</a>
+          </div>
+        </div>
+      </header>
+
+      {/* NOSOTROS */}
+      <section className="section" id="nosotros">
+        <div className="container">
+          <div className="section-head">
+            <div className="section-eyebrow">Quiénes somos</div>
+            <h2>Educación, alfabetización y acción ciudadana</h2>
+            <p>
+              Aspiramos a ser una organización líder en Puerto Rico en la
+              transformación social y comunitaria, reconocida por movilizar la
+              acción colectiva, impulsar la educación como herramienta de
+              empoderamiento y facilitar el acceso equitativo a servicios
+              esenciales con impacto en la salud.
+            </p>
+          </div>
+
+          <div className="pilares">
+            <div className="pilar">
+              <h3>Misión</h3>
+              <p>
+                Contribuir al fortalecimiento de las comunidades en Puerto
+                Rico mediante la acción comunitaria, la alfabetización, la
+                educación y la capacitación adaptadas a las realidades de las
+                diversas poblaciones del país.
+              </p>
+            </div>
+            <div className="pilar">
+              <h3>Propósito</h3>
+              <p>
+                Promovemos la conciencia y la participación ciudadana en
+                temas de salud, política pública y política partidista,
+                brindando herramientas educativas claras que fortalezcan la
+                acción comunitaria y democrática.
+              </p>
+            </div>
+            <div className="pilar">
+              <h3>Cómo trabajamos</h3>
+              <p>
+                Todos nuestros servicios tienen un carácter educativo,
+                complementario y voluntario, y no sustituyen la asistencia
+                oficial de las agencias gubernamentales correspondientes.
+              </p>
+            </div>
+          </div>
+
+          <div className="valores-grid">
+            {valores.map((v) => (
+              <div className="valor" key={v.nombre}>
+                <div className="valor-mark" />
+                <h4>{v.nombre}</h4>
+                <p>{v.texto}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TALLERES */}
+      <section className="section" id="talleres" style={{ background: "var(--white)" }}>
+        <div className="leaf leaf-outline" style={{ width: 40, height: 40, top: -14, right: 60, transform: "rotate(-12deg)" }} />
+        <div className="container">
+          <div className="section-head">
+            <div className="section-eyebrow">Talleres</div>
+            <h2>Formación para organizaciones y comunidades</h2>
+            <p>Espacios educativos diseñados para escuelas, organizaciones comunitarias y grupos de base.</p>
+          </div>
+          {talleres.map((t) => (
+            <div className="taller" key={t.titulo}>
+              <h3>{t.titulo}</h3>
+              <div>
+                <p>{t.texto}</p>
+                {t.colaborador && <p className="taller-colaborador">{t.colaborador}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* COMUNIDAD */}
+      <section className="section" id="comunidad">
+        <div className="container">
+          <div className="section-head">
+            <div className="section-eyebrow">Trabajo comunitario</div>
+            <h2>Impacto directo en las comunidades</h2>
+            <p>
+              Nuestra iniciativa de impacto comunitario identifica y atiende
+              necesidades básicas en comunidades vulnerables mediante
+              respuestas voluntarias directas y oportunas.
+            </p>
+          </div>
+
+          <div className="comunidad-wrap">
+            <div className="caso-card">
+              <div className="leaf" style={{ width: 18, height: 18, top: 20, right: 24 }} />
+              <div className="caso-tag">Historia comunitaria</div>
+              <h3>El caso de Doña Mirta</h3>
+              <p>
+                Doña Mirta es una señora que vivía en condiciones de vivienda
+                deplorables. A través de nuestra iniciativa de impacto
+                comunitario, coordinamos asistencia voluntaria para mejorar
+                sus condiciones de habitabilidad, devolviéndole dignidad y
+                seguridad a su hogar.
+              </p>
+            </div>
+
+            <div className="impacto-list">
+              <div className="impacto-item">
+                <h3>Asistencia a personas en situación de desventaja</h3>
+                <p>
+                  Hemos ofrecido asistencia a personas en situación de
+                  desventaja, identificando necesidades básicas insatisfechas
+                  y coordinando respuestas voluntarias oportunas.
+                </p>
+              </div>
+              <div className="impacto-item">
+                <h3>Carácter voluntario y complementario</h3>
+                <p>
+                  Todo nuestro trabajo comunitario es voluntario y no
+                  sustituye la información ni la asistencia oficial provista
+                  por las agencias gubernamentales correspondientes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* INCIDENCIA LEGISLATIVA */}
+      <section className="section" id="incidencia" style={{ background: "var(--white)" }}>
+        <div className="container">
+          <div className="section-head">
+            <div className="section-eyebrow">Incidencia pública</div>
+            <h2>Participación en política pública</h2>
+            <p>Así hemos participado en procesos de política pública relacionados a nuestra misión.</p>
+          </div>
+
+          <div className="timeline">
+            <div className="tl-row">
+              <span className="tl-dot" />
+              <div className="tl-text">
+                <strong>Petición de información</strong>
+                <span>
+                  Solicitud de datos e información pública a agencias de
+                  gobierno sobre el estado del TDAH y los servicios
+                  disponibles en Puerto Rico.
+                </span>
+              </div>
+            </div>
+            <div className="tl-row">
+              <span className="tl-dot" />
+              <div className="tl-text">
+                <strong>Radicación de medidas</strong>
+                <span>Pronto se estará anunciando.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACTO */}
+      <section className="contacto" id="contacto">
+        <div className="leaf leaf-outline" style={{ width: 200, height: 200, top: -80, right: -80, opacity: 0.15 }} />
+        <div className="container">
+          <div className="section-head">
+            <div className="section-eyebrow">Conversemos</div>
+            <h2>Colabora con nosotros</h2>
+            <p>
+              Completa el formulario para solicitar un taller, proponer una
+              alianza o hacer una consulta.
+            </p>
+          </div>
+
+          <div className="contacto-grid">
+            <div>
+              {enviado ? (
+                <div className="confirm">
+                  <strong>Gracias por escribir</strong>
+                  Recibimos tu mensaje y te contactaremos lo antes posible
+                  para conversar sobre {form.motivo.toLowerCase()}.
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <input type="hidden" name="_replyto" value={form.correo} />
+                  <input type="hidden" name="_subject" value="Nuevo mensaje desde EducAcción Corp." />
+                  <div className="field">
+                    <label htmlFor="nombre">Nombre completo</label>
+                    <input id="nombre" name="nombre" type="text" placeholder="Tu nombre"
+                      value={form.nombre} onChange={handleChange} required />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="correo">Correo electrónico</label>
+                    <input id="correo" name="correo" type="email" placeholder="tucorreo@ejemplo.com"
+                      value={form.correo} onChange={handleChange} required />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="organizacion">Organización (opcional)</label>
+                    <input id="organizacion" name="organizacion" type="text" placeholder="Nombre de tu escuela u organización"
+                      value={form.organizacion} onChange={handleChange} />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="motivo">Motivo</label>
+                    <select id="motivo" name="motivo" value={form.motivo} onChange={handleChange}>
+                      <option>Solicitar un taller</option>
+                      <option>Proponer una alianza</option>
+                      <option>Donación o colaboración</option>
+                      <option>Consulta general</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label htmlFor="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos un poco más..."
+                      value={form.mensaje} onChange={handleChange} required />
+                  </div>
+                  <button className="submit-btn" type="submit" disabled={enviando}>
+                    {enviando ? "Enviando..." : "Enviar mensaje"}
+                  </button>
+                  {error && (
+                    <p className="form-error">
+                      No se pudo enviar el mensaje. Intenta de nuevo en unos minutos.
+                    </p>
+                  )}
+                </form>
+              )}
+            </div>
+
+            <div className="colaborar">
+              <h3>Apoya nuestra labor</h3>
+              <p>
+                Se aceptan donaciones para fortalecer los talleres, materiales
+                y el trabajo comunitario que hacemos junto a las familias de
+                Puerto Rico.
+              </p>
+              <a className="btn btn-donar" href="#">Donar</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="footer">
+        <div className="container footer-row">
+          <div className="footer-note">
+            <strong>EducAcción Corp.</strong> · Puerto Rico
+            <br />
+            Presidenta: Ariana Carreras Espinosa
+          </div>
+          <div className="footer-contact">
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            <a className="footer-social" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+              <span className="footer-social-icon" aria-hidden="true"><IconInstagram /></span>
+              @{SOCIAL_HANDLE}
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<EducAccionCorp />);
+</script>
+</body>
+</html>
